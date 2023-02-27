@@ -4,6 +4,7 @@ import { GLOBALTYPES } from "../redux/actions/globalTypes";
 
 import SpinLoader from "../components/loading/SpinLoader";
 import Toast from "../components/alert/Toast";
+import Header from "../components/Header/Header";
 
 function HomePage() {
   const { auth, alert } = useSelector((state) => state);
@@ -11,6 +12,7 @@ function HomePage() {
 
   return (
     <>
+      <Header />
       <>
         {alert.success && (
           <Toast
