@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
 
@@ -10,6 +10,11 @@ function HomePage() {
   const { auth, alert } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  useEffect ( () => {
+    console.log(auth)
+    console.log(alert)
+  },[])
+  
   return (
     <>
       <Header />

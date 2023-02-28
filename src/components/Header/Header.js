@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 import React, { useState } from 'react'
 import imageAvatar from "../../assets/avatar/imageAvatar.jpg"
 import { ProfileOutlined, SettingOutlined, HeartOutlined, KeyOutlined, LogoutOutlined} from '@ant-design/icons';
-import { Menu } from 'antd';
+import { Menu, Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/actions/authActions';
 // import UserCard from '../UserCard/UserCard';
 
 function getItem(label, key, icon, children, type) {
@@ -26,7 +28,8 @@ const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4'];
 const Header = () => {
   const [search, setSearch] = useState('')
   const [isSearch, setIsSearch] = useState(false)
-  // const [checkLogout, setCheckLogout] = useState(false)
+  const [checkLogout, setCheckLogout] = useState(false)
+  const dispatch = useDispatch();
   // const [users, setUsers] = useState([])
   const [isShowProfile, setIsShowProfile] = useState(false)
   const [isShowNotification, setIsShowNotification] = useState(false)
@@ -49,6 +52,11 @@ const Header = () => {
     else {
       setIsSearch(false)
     }
+  }
+
+  const handleClick = (e) => {
+    console.log(e.key)
+    if (e.key === "sub4") setCheckLogout(true);
   }
 
   const handleFocus = () => {
@@ -74,12 +82,6 @@ const Header = () => {
     setIsSearch(false)
     setIsShowProfile(!isShowProfile)
   }
-  
-  
-  // const handleLogout = () => {
-    
-  // }
-
 
   return (
     <div className='header'>
@@ -132,6 +134,7 @@ const Header = () => {
             mode="inline"
             openKeys={openKeys}
             onOpenChange={onOpenChange}
+            onClick={e => handleClick(e)}
             style={{
               width: 256,
             }}
@@ -146,18 +149,22 @@ const Header = () => {
         {isSearch && 
           <div className='search-user'></div>
         }
-        {/* {checkLogout && 
+        {checkLogout && 
           <div className="back-form">
             <div className="modal-form"></div>
             <div className="container-logout">
               <p>Bạn muốn đăng xuất ?</p>
               <div className="form-footer">
-                <button className="confirm-logout" onClick={handleLogout}>Đồng ý</button>
-                <button className="exit-logout" onClick={() => setCheckLogout(false)}>Hủy bỏ</button>
+                <Button type="primary" block className="confirm-logout" onClick={() => dispatch(logout())}>
+                  Đồng ý
+                </Button>
+                <Button type="primary" danger className="exit-logout" onClick={() => setCheckLogout(false)}>
+                  Hủy bỏ
+                </Button>
               </div>
             </div>
           </div>
-        } */}
+        }
       </div>
     </div>
   );
