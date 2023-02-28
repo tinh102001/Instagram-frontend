@@ -5,6 +5,7 @@ import { ProfileOutlined, SettingOutlined, HeartOutlined, KeyOutlined, LogoutOut
 import { Menu, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
+import { useNavigate } from 'react-router-dom';
 // import UserCard from '../UserCard/UserCard';
 
 function getItem(label, key, icon, children, type) {
@@ -33,6 +34,7 @@ const Header = () => {
   // const [users, setUsers] = useState([])
   const [isShowProfile, setIsShowProfile] = useState(false)
   const [isShowNotification, setIsShowNotification] = useState(false)
+  const navigate = useNavigate();
 
   const [openKeys, setOpenKeys] = useState(['sub1']);
   const onOpenChange = (keys) => {
@@ -56,7 +58,11 @@ const Header = () => {
 
   const handleClick = (e) => {
     console.log(e.key)
+    if (e.key === "sub1") navigate("/myprofile");
+    if (e.key === "sub2") navigate("/changepassword");
+    if (e.key === "sub3") navigate("/setting");
     if (e.key === "sub4") setCheckLogout(true);
+    
   }
 
   const handleFocus = () => {
