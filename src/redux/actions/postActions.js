@@ -7,6 +7,7 @@ export const POST_TYPES = {
   GET_POSTS: "GET_POSTS",
   UPDATE_POST: "UPDATE_POST",
   LOADING_POST: "LOADING_POST",
+  GET_POST: "GET_POST",
 };
 
 export const createPost =
@@ -87,3 +88,17 @@ export const unLikePost =
       });
     }
   };
+
+export const getPost = (id, token) => async (dispatch) => {
+  try {
+    dispatch({ type: POST_TYPES.LOADING_POST, payload: true })
+    const res = await getAPI(`post/${id}`, token);
+    dispatch({ type: POST_TYPES.GET_POST, payload: res.data.post })
+    dispatch({ type: POST_TYPES.LOADING_POST, payload: false })
+  } catch (err) {
+    dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: {error: err.response.data.msg}
+    })
+  }
+};

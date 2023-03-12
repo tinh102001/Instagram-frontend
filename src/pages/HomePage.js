@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import SpinLoader from "../components/Loading/SpinLoader";
 import Status from "../components/Status/Status";
 import Header from "../components/Header/Header";
 import Alert from "../components/Alert/Alert";
 import PostCard from "../components/PostCard/PostCard";
+import PostCardSkeleton from "../components/PostCard/PostCardSkeleton";
 import { POST_TYPES, getPosts } from "../redux/actions/postActions";
 import { getAPI } from "../utils/fetchAPI";
 
@@ -13,7 +16,7 @@ const HomePage = () => {
   const { auth, homePosts } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -42,7 +45,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const onScroll = async function () {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
         handleLoadMore();
       }
     };
@@ -54,13 +57,16 @@ const HomePage = () => {
     <>
       <Header />
       <Alert />
-      <div>
-        {auth.token ? <div>Hello {auth.user.username}</div> : <SpinLoader />}
-      </div>
+      <div>Hello {auth.user.username}</div>
 
       <Status />
-      {load && <SpinLoader />}
-      {posts.length !== 0 ? <PostCard posts={posts} /> : <div>No Post</div>}
+
+      {posts.length !== 0 ? <PostCard posts={posts} /> : <PostCardSkeleton />}
+      {/* {posts.length !== 0 ?? <>{posts.map((post) => (<PostCard post={post}/>))}</>} 
+      {posts.length === 0 ?? <div>No Post</div>} */}
+      {/* {posts.length !== 0 ?? <>{console.log("!")}</>}  */}
+      {/* <PostCard posts={posts}/> */}
+      { load && <PostCardSkeleton />}
     </>
   );
 };
