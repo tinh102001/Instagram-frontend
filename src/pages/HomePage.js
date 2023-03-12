@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import SpinLoader from "../components/Loading/SpinLoader";
 import Status from "../components/Status/Status";
 import Header from "../components/Header/Header";
 import Alert from "../components/Alert/Alert";
@@ -62,10 +60,6 @@ const HomePage = () => {
       <Status />
 
       {posts.length !== 0 ? <PostCard posts={posts} /> : <PostCardSkeleton />}
-      {/* {posts.length !== 0 ?? <>{posts.map((post) => (<PostCard post={post}/>))}</>} 
-      {posts.length === 0 ?? <div>No Post</div>} */}
-      {/* {posts.length !== 0 ?? <>{console.log("!")}</>}  */}
-      {/* <PostCard posts={posts}/> */}
       { load && <PostCardSkeleton />}
     </>
   );
